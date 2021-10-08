@@ -32,8 +32,14 @@ class ViewController: UIViewController {
             return
         }
         
-        var p1 = baseURL + baseCurrency.text! + "_" + targetCurrency.text! + "," + targetCurrency.text!
-        var p2 = "_" + baseCurrency.text! + "&compact=ultra&apiKey=" + apiKey
+        getCurrencyValue(baseCurrency.text!, targetCurrency.text!);
+        
+    }
+    
+    func getCurrencyValue(_ base: String, _ target: String){
+        
+        var p1 = baseURL + base + "_" + target + "," + target
+        var p2 = "_" + base + "&compact=ultra&apiKey=" + apiKey
         let url = p1 + p2
         
         SwiftSpinner.show("Converting the currency")
@@ -61,7 +67,6 @@ class ViewController: UIViewController {
             self.lblValue.text = rate.stringValue
             
         }
-        
     }
     
 }
