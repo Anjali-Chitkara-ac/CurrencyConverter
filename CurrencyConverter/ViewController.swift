@@ -32,14 +32,17 @@ class ViewController: UIViewController {
             return
         }
         
-        getCurrencyValue(baseCurrency.text!, targetCurrency.text!);
+        let base : String = (baseCurrency.text?.uppercased())!
+        let target : String = (targetCurrency.text?.uppercased())!
+        
+        getCurrencyValue(base, target);
         
     }
     
     func getCurrencyValue(_ base: String, _ target: String){
         
-        var p1 = baseURL + base + "_" + target + "," + target
-        var p2 = "_" + base + "&compact=ultra&apiKey=" + apiKey
+        let p1 = baseURL + base + "_" + target + "," + target
+        let p2 = "_" + base + "&compact=ultra&apiKey=" + apiKey
         let url = p1 + p2
         
         SwiftSpinner.show("Converting the currency")
@@ -57,9 +60,12 @@ class ViewController: UIViewController {
             print(url)
             let convertedValues = JSON(response.data!)
             
-            //TODO handle empty convertedValues
+            if(convertedValues.isEmpty){
+                self.lblValue.text = "Invalid input"
+                return
+            }
 
-            let key = self.baseCurrency.text! + "_" + self.targetCurrency.text!
+            let key = base + "_" + target
             
             let rate = convertedValues[key]
             print(rate)
